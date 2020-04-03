@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Vuetify -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <title>ACNH Tool</title>
+</head>
+<body>
+  <v-app id="app">
+    <v-content>
+      <v-container>
+
+        <h1 class="display-1">ACNH Prices</h1>
+        <br>
+
+        <v-card>
+          <v-container>
+            <p>Find an Item</p>
+            <v-autocomplete
+              v-model="input"
+              label="Search"
+              :items="autocompleteItems()"
+              @input="selectItem"
+            ></v-autocomplete>
+
+            <p>Value: {{ selectedItem ? selectedItem.price : 0 }}</p>
+          </v-container>
+
+          <v-card-actions>
+            <v-btn text color="primary" @click="addToQuickList">Add To QL</v-btn>
+            <v-btn text @click="clearQuickList">Clear QL</v-btn>
+          </v-card-actions>
+        </v-card>
+
+        <v-row>
+          <v-col>
+            <h2 class="title">Quick List</h2>
+            <v-list>
+              <v-list-item v-for="(item, index) in quickList" :key="index">
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.name }}</v-list-item-title>
+                  <v-list-item-subtitle>{{ item.price }}</v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title>Total: {{ invTotal }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-col>
+        </v-row>
+
+      </v-container>
+
+    </v-content>
+  </v-app>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
+
