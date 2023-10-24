@@ -952,7 +952,7 @@ var app = new Vue({
   },
   computed: {
     invTotal: function() {
-      return this.quickList.map(item => item.price).reduce((a, b) => a + b, 0);
+      return this.quickList.map(item => item.price * item.quantity).reduce((a, b) => a + b, 0);
     }
   },
   methods: {
@@ -965,7 +965,10 @@ var app = new Vue({
     addToQuickList: function() {
       if (!this.selectedItem)
         return;
-      this.quickList.push({...this.selectedItem});
+      this.quickList.push({...this.selectedItem, quantity: 1});
+    },
+    removeItem: function(index) {
+      this.quickList.splice(index, 1);
     },
     clearQuickList: function() {
       this.quickList = [];

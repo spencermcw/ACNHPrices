@@ -11,15 +11,14 @@
 </head>
 <body>
   <v-app id="app">
-    <v-content>
+    <v-main>
       <v-container>
 
-        <h1 class="display-1">ACNH Prices</h1>
+        <h1 class="display-1">Animal Crossing Price Calculator</h1>
         <br>
 
-        <v-card>
+        <v-card class="mb-8">
           <v-container>
-            <p>Find an Item</p>
             <v-autocomplete
               v-model="input"
               label="Search"
@@ -27,40 +26,47 @@
               @input="selectItem"
             ></v-autocomplete>
 
-            <p>Value: {{ selectedItem ? selectedItem.price : 0 }}</p>
+            <p>Value: {{ Number(selectedItem ? selectedItem.price : 0).toLocaleString('en-US') }}</p>
           </v-container>
 
           <v-card-actions>
-            <v-btn text color="primary" @click="addToQuickList">Add To QL</v-btn>
-            <v-btn text @click="clearQuickList">Clear QL</v-btn>
+            <v-btn text color="primary" @click="addToQuickList">Add</v-btn>
+            <v-btn text @click="clearQuickList">Clear</v-btn>
           </v-card-actions>
         </v-card>
 
-        <v-row>
-          <v-col>
-            <h2 class="title">Quick List</h2>
+        <v-card>
+          <v-container>
+            <h2 class="title">List</h2>
             <v-list>
               <v-list-item v-for="(item, index) in quickList" :key="index">
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.name }}</v-list-item-title>
-                  <v-list-item-subtitle>{{ item.price }}</v-list-item-subtitle>
+                  <v-list-item-title>
+                    {{ item.name }}
+                  </v-list-item-title>
+                  <v-list-item-subtitle>{{ Number(item.price).toLocaleString('en-US') }} x {{ item.quantity }} = {{ Number(item.price * item.quantity).toLocaleString('en-US') }}</v-list-item-subtitle>
+                  <div class="d-flex pa-2">
+                    <v-text-field label="Quantity" type="number" min="1" step="1" v-model="item.quantity">{{ item.quantity }}</v-text-field>
+                    <v-btn @click="removeItem(index)">X</v-btn>
+                  </div>
                 </v-list-item-content>
               </v-list-item>
               <v-divider></v-divider>
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title>Total: {{ invTotal }}</v-list-item-title>
+                  <v-list-item-title class="font-weight-bold">Total: {{ Number(invTotal).toLocaleString('en-US') }} Bells</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-          </v-col>
-        </v-row>
+          </v-container>
+        </v-card>
 
       </v-container>
 
-    </v-content>
+    </v-main>
   </v-app>
 
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/decimal.js/9.0.0/decimal.min.js" integrity="sha512-zPQm8HS4Phjo9pUbbk+HPH3rSWu5H03NFvBpPf6D9EU2xasj0ZxhYAc/lvv/HVDWMSE1Autj19i6nZOfiVQbFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
   <script src="./app.js"></script>
